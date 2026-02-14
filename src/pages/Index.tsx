@@ -12,12 +12,16 @@ import {
 import { OfflineModal } from "@/components/OfflineModal";
 import { PermissionFlow } from "@/components/PermissionFlow";
 import { ChatBot } from "@/components/ChatBot";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { LanguageToggle } from "@/components/LanguageToggle";
 import { useOnlineStatus } from "@/hooks/useOnlineStatus";
+import { useLanguage } from "@/hooks/useLanguage";
 import type { PermissionStatus } from "@/hooks/usePermissions";
 import heroImage from "@/assets/hero-farm.jpg";
 
 const Index = () => {
   const isOnline = useOnlineStatus();
+  const { t } = useLanguage();
   const [offlineDismissed, setOfflineDismissed] = useState(false);
   const [permissionsReady, setPermissionsReady] = useState(false);
   const [grantedPermissions, setGrantedPermissions] = useState<{
@@ -39,22 +43,22 @@ const Index = () => {
   const features = [
     {
       icon: <CloudSun className="h-6 w-6" />,
-      title: "Weather Insights",
-      desc: "Hyper-local forecasts for your fields",
+      title: t("weatherInsights"),
+      desc: t("weatherInsightsDesc"),
       enabled: grantedPermissions.location === "granted",
       requiresPermission: "location" as const,
     },
     {
       icon: <ScanLine className="h-6 w-6" />,
-      title: "Leaf Analysis",
-      desc: "AI-powered disease detection",
+      title: t("leafAnalysis"),
+      desc: t("leafAnalysisDesc"),
       enabled: grantedPermissions.camera === "granted",
       requiresPermission: "camera" as const,
     },
     {
       icon: <Sprout className="h-6 w-6" />,
-      title: "Crop Suggestions",
-      desc: "Region-optimized recommendations",
+      title: t("cropSuggestions"),
+      desc: t("cropSuggestionsDesc"),
       enabled: grantedPermissions.location === "granted",
       requiresPermission: "location" as const,
     },
@@ -85,35 +89,41 @@ const Index = () => {
           <div className="flex items-center gap-2 mb-2">
             <Leaf className="h-8 w-8 text-primary-foreground" />
             <h1 className="text-3xl sm:text-4xl font-display font-extrabold text-primary-foreground">
-              AgriVision
+              {t("agriVision")}
             </h1>
           </div>
           <p className="text-sm sm:text-base text-primary-foreground/80 max-w-md">
-            Smart farming powered by AI & real-time data
+            {t("heroSubtitle")}
           </p>
         </div>
       </div>
 
       {/* Status Bar */}
-      <div className="flex items-center justify-center gap-4 py-3 border-b border-border bg-card">
-        <StatusChip
-          label="Online"
-          active={isOnline}
-        />
-        <StatusChip
-          label="Location"
-          active={grantedPermissions.location === "granted"}
-        />
-        <StatusChip
-          label="Camera"
-          active={grantedPermissions.camera === "granted"}
-        />
+      <div className="flex items-center justify-between gap-2 py-3 px-4 border-b border-border bg-card">
+        <div className="flex items-center gap-2 overflow-x-auto">
+          <StatusChip
+            label={t("online")}
+            active={isOnline}
+          />
+          <StatusChip
+            label={t("location")}
+            active={grantedPermissions.location === "granted"}
+          />
+          <StatusChip
+            label={t("camera")}
+            active={grantedPermissions.camera === "granted"}
+          />
+        </div>
+        <div className="flex items-center gap-2 shrink-0">
+          <LanguageToggle />
+          <ThemeToggle />
+        </div>
       </div>
 
       {/* Features Grid */}
       <main className="max-w-lg mx-auto px-4 py-8 space-y-4">
         <h2 className="text-lg font-display font-bold text-foreground">
-          Features
+          {t("features")}
         </h2>
         <div className="grid gap-3">
           {features.map((f) => (
@@ -155,7 +165,7 @@ const Index = () => {
             grantedPermissions.camera === "denied") && (
             <div className="rounded-xl border border-agri-warning/30 bg-agri-warning/5 p-4 text-sm text-muted-foreground">
               <p className="font-display font-semibold text-foreground mb-1">
-                Some permissions were denied
+                {t("permissionsDenied")}
               </p>
               {grantedPermissions.location === "denied" && (
                 <p className="flex items-center gap-2">
