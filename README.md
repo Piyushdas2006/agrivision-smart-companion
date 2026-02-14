@@ -1,3 +1,4 @@
+<!-- <<<<<<< HEAD
 # Welcome to your Lovable project
 
 ## Project info
@@ -71,3 +72,16 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+=======
+# agrivision-smart-companion
+>>>>>>> 4e43e31d114fcc30ce2e1adc79a392536c5e4806 -->
+
+# Agrivision Smart Companion 🌾
+
+AI-powered smart farming assistant.
+
+## Features
+- Soil analysis
+- Crop recommendation
+- NPK support
+- Supabase backend
